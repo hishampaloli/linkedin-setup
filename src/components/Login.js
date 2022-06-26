@@ -1,21 +1,24 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
 import { signInAPI } from "../actions/index";
+import {  useNavigate} from 'react-router-dom'
 
-function Login(Props) {
+function Login(props) {
+  const navigate = useNavigate();
+  console.log(props.user);
   return (
     <div>
+    {props.user && navigate('/home')}
       <form>
-        <button
+        <p
           style={{
             margin: "40vh",
             backgroundColor: "white",
             padding: "10px 15px",
           }}
-          onClick={() => Props.signIn()} >
+          onClick={() => props.signIn()} >
           sign up with google
-        </button>
+        </p>
       </form>
     </div>
   );
