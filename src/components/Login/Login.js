@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import './Login.css'
-import './log'
 import { signInAPI } from "../../actions/index";
-import {  useNavigate} from 'react-router-dom'
+import {  useNavigate} from 'react-router-dom';
 import img1 from './img/logo.png';
 import img2 from './img/home-img.svg'
 function Login(props) {
@@ -285,7 +284,6 @@ function Login(props) {
 
             
         </footer>
-
     </div>
   );
 }
