@@ -3,14 +3,14 @@ import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import WorkIcon from "@mui/icons-material/Work";
 import FeedIcon from "@mui/icons-material/Feed";
-
-function MiddleCardForHome() {
+import { connect } from 'react-redux'
+function MiddleCardForHome(props) {
   return (
     <div className="middle flex flex-col items-center rounded-lg">
       <div className="middle-top flex items-center justify-between">
         <div className="logo">
           <img
-            src="https://media-exp2.licdn.com/dms/image/C5603AQH9Fjs8i_oRuQ/profile-displayphoto-shrink_100_100/0/1643992170235?e=1661385600&v=beta&t=nsW4uIU-VeKsdTh6fCc0Mx0OwEAXgWG9xvA70iaeFkI"
+            src={props.user && props.user.photoURL ? props.user.photoURL : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}
             alt=""
           />
         </div>
@@ -47,4 +47,15 @@ function MiddleCardForHome() {
   );
 }
 
-export default MiddleCardForHome;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MiddleCardForHome);
+
+

@@ -9,10 +9,15 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import {  useNavigate} from 'react-router-dom'
+import { connect } from "react-redux";
 
-function Home() {
+function Home(props) {
+  const navigate = useNavigate();
+
   return (
     <div className="main">
+     {!props.user && navigate('/')}
       <div className="home flex justify-around">
         <div className="row1">
           <LeftCardForHome />
@@ -85,5 +90,11 @@ function Home() {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user
+  };
+};
 
-export default Home;
+
+export default connect(mapStateToProps)(Home);

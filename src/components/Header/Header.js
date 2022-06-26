@@ -7,9 +7,10 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';import Busin
 import ChatIcon from '@mui/icons-material/Chat';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {connect} from 'react-redux'
+import { signOutAPI } from '../../actions';
 
-
-function Header() {
+function Header(props) {
 
     const [st, setSt] = useState('h');
 
@@ -31,11 +32,24 @@ function Header() {
                 <li className={st === 'j' ? 'flex flex-col icons st items-center' : 'flex flex-col icons items-center'} onClick={() => setSt('j')}> <BusinessCenter /><p> Jobs</p></li>
                 <li className={st === 'm' ? 'flex flex-col icons st items-center' : 'flex flex-col icons items-center'} onClick={() => setSt('m')}> <ChatIcon /><p> Message</p></li>
                 <li className={st === 'N' ? 'flex flex-col icons st items-center' : 'flex flex-col icons items-center'} onClick={() => setSt('N')} > <NotificationsIcon /><p>Notification</p> </li>
-                <li className={st === 'me' ? 'flex flex-col icons st items-center' : 'flex flex-col icons items-center'} onClick={() => setSt('me')}> <AccountCircleIcon /><p>Me</p></li>
+                <li className={st === 'me' ? 'flex flex-col icons st items-center' : 'flex flex-col icons items-center'} onClick={() => setSt('me')}>{props.user && props.user.photoURL ? <img className='proc-img' src={props.user.photoURL} alt="" /> : <AccountCircleIcon />}  <p>Me</p></li>
+                <li className={st === 'N' ? 'flex flex-col icons items-center' : 'flex flex-col icons items-center'} onClick={() => props.signOut()}  > <NotificationsIcon /><p>{props.user ? 'SignOut': 'signIn'}</p> </li>
             </ul>
         </div>
     </div>
   )
 }
 
-export default Header
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => dispatch(signOutAPI())
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

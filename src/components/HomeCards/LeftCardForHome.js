@@ -1,16 +1,17 @@
 import React from "react";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import TouchAppIcon from "@mui/icons-material/TouchApp";
+import { connect} from 'react-redux'
 
-function LeftCardForHome() {
+function LeftCardForHome(props) {
   return (
     <div className="left flex flex-col items-center relative ">
       <div className="left-top rounded-t-lg"></div>
 
       <div className="left-body flex flex-col items-center">
-        <div className="prof"><img style={{borderRadius:'50%'}} src="https://media-exp2.licdn.com/dms/image/C5603AQH9Fjs8i_oRuQ/profile-displayphoto-shrink_100_100/0/1643992170235?e=1661385600&v=beta&t=nsW4uIU-VeKsdTh6fCc0Mx0OwEAXgWG9xvA70iaeFkI" alt="" /></div>
-        <h1 className="text-base">Hisham Paloli</h1>
-        <p>MernStack web developer</p>
+        <div className="prof"><img style={{borderRadius:'50%'}} src={props.user && props.user.photoURL ? props.user.photoURL : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'} alt="" /></div>
+        <h1 className="text-base">{props.user && props.user.displayName ?  props.user.displayName : 'Welcome user !'}</h1>
+        <p>Start your Journey !</p>
       </div>
 
       <div className="left-bottom">
@@ -35,4 +36,12 @@ function LeftCardForHome() {
   );
 }
 
-export default LeftCardForHome;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftCardForHome);
