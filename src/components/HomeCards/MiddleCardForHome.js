@@ -3,13 +3,14 @@ import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import WorkIcon from "@mui/icons-material/Work";
 import FeedIcon from "@mui/icons-material/Feed";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 import { connect } from 'react-redux'
 import PostModalForHome from "./PostModalForHome";
 
 function MiddleCardForHome(props) {
 
   const [modal, setModal] = useState('close');
-  console.log(modal);
   
   const handleClick = (e) => {
     e.preventDefault();
@@ -55,6 +56,10 @@ function MiddleCardForHome(props) {
         </li>
       </div>
       <PostModalForHome showmodal = {modal} handleClick={handleClick} />
+      {props.loading && (<Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>)}
+      
     </div>
   );
 }
@@ -62,7 +67,8 @@ function MiddleCardForHome(props) {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userState.user
+    loading: state.articleState.loading,
+    user: state.userState.user,
   };
 };
 

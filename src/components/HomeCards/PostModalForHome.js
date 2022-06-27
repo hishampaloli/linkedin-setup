@@ -8,6 +8,8 @@ import ChatIcon from "@mui/icons-material/Chat";
 import Chat from "@mui/icons-material/Chat";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
+import firebase from "firebase/compat/app";
+import { postArticleAPI } from "../../actions";
 
 function PostModalForHome(props) {
   const [text, setText] = useState("");
@@ -44,6 +46,25 @@ function PostModalForHome(props) {
     setshowvid(false);
     setVideoLink('');
     setShareImage('') 
+  }
+
+  const postArticle = (e) => {
+    e.preventDefault();
+    if (e.target !== e.currentTarget){
+        return;
+    }
+
+    const payload = {
+        image: shareImage,
+        video: videoLink,
+        user: props.user,
+        description: text,
+        timestamp: firebase.firestore.Timestamp.now(),
+    };
+
+    props.postArticle(payload);
+    console.log(payload);
+    reset(e)
   }
 
   return (
@@ -129,7 +150,8 @@ function PostModalForHome(props) {
                     <ChatIcon /> Anyone
                   </li>
                   <button
-                    disabled={false}
+                  onClick={(e) => postArticle(e)}
+                  disabled={text === '' ? true: false}
                     style={
                       text === ""
                         ? { cursor: "not-allowed" }
@@ -154,6 +176,8 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapDispatchToProps = (dispatch) => ({
+    postArticle: (payload) => dispatch(postArticleAPI(payload)),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostModalForHome)
