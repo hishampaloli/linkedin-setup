@@ -1,6 +1,6 @@
 
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import Login from './components/Login/Login';
 import Header from './components/Header/Header';
 import {connect} from 'react-redux'
@@ -10,6 +10,7 @@ import { getUserAuth } from './actions';
 
 
 function App(Props) {
+  
 
   useEffect(() => {
     Props.getUserAuth();
@@ -30,7 +31,9 @@ function App(Props) {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    user: state.userState.user
+  };
 }
 
 const mapDispatchToProps = (dispatch) => ({

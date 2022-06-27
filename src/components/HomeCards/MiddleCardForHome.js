@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import PhotoSizeSelectActualIcon from "@mui/icons-material/PhotoSizeSelectActual";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import WorkIcon from "@mui/icons-material/Work";
 import FeedIcon from "@mui/icons-material/Feed";
 import { connect } from 'react-redux'
+import PostModalForHome from "./PostModalForHome";
+
 function MiddleCardForHome(props) {
+
+  const [modal, setModal] = useState('close');
+  console.log(modal);
+  
+  const handleClick = (e) => {
+    e.preventDefault();
+    {modal === 'close' ? setModal('open') : setModal('close')}
+
+  }
   return (
     <div className="middle flex flex-col items-center rounded-lg">
       <div className="middle-top flex items-center justify-between">
@@ -15,7 +26,7 @@ function MiddleCardForHome(props) {
           />
         </div>
 
-        <button>Ask your network for advice</button>
+        <button onClick={handleClick}>Ask your network for advice</button>
       </div>
       <div className="middle-bottom w-full list-none flex items-center justify-around">
         <li className="flex items-center">
@@ -43,6 +54,7 @@ function MiddleCardForHome(props) {
           Article
         </li>
       </div>
+      <PostModalForHome showmodal = {modal} handleClick={handleClick} />
     </div>
   );
 }
