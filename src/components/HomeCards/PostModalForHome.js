@@ -64,7 +64,7 @@ function PostModalForHome(props) {
               </div>
 
               <div className="mdpf-right ml-3">
-                <h1>hisham paloli</h1>
+                <h1>{props.user.displayName}</h1>
                 <button className="flex px-3">
                   <PublicIcon /> Anyone <ArrowDropDownIcon />
                 </button>
