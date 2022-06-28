@@ -25,7 +25,7 @@ function Home(props) {
         </div>
         <RightCardForHome />
       </div>
-     
+      <PostModalForHome />
     </div>
   );
 }

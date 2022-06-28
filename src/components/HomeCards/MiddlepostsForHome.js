@@ -7,19 +7,22 @@ import PublicIcon from "@mui/icons-material/Public";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { getArticlesAPI } from "../../actions";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import { color } from "@mui/system";
 
 function MiddlepostsForHome(props) {
 
-//   useEffect(() => {
-//     props.getArticles();
-//   }, []);
-  
-  return (
-    <>
-      {props.articles.length === 0 ? 
-        <p>786</p>
-       : 
-        <div className="middlePosts flex flex-col items-start rounded-lg">
+  useEffect(() => {
+    props.getArticles();
+  }, []);
+
+  console.log('test',props.articles);
+
+  return < >{props.articles ? <Box sx={{ display: 'flex',marginTop:'50px',marginLeft:'50%' }}>
+  <CircularProgress />
+</Box> : (
+     <div className="middlePosts flex flex-col items-start rounded-lg">
           <div className="post-top flex flex-row justify-between">
             <div className="pt-left">
               <img
@@ -78,9 +81,7 @@ function MiddlepostsForHome(props) {
             </div>
           </div>
         </div>
-      }
-    </>
-  );
+  )}</>;
 }
 
 const mapStateToProps = (state) => {
