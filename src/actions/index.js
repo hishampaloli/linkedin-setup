@@ -2,9 +2,9 @@ import { auth, provider, storage } from "../Firebase/Firebase";
 import db from "../Firebase/Firebase";
 import { SET_USER , SET_LOADING_STATU, GET_ARTICLES} from "./actionType";
 
-export const setUser = (paylaod) => ({
+export const setUser = (payload) => ({
   type: SET_USER,
-  user: paylaod,
+  user: payload,
 });
 
 export const setLoading = (status) => ({
@@ -12,17 +12,18 @@ export const setLoading = (status) => ({
   status: status,
 })
 
-export const getArticles = (paylaod) => ({
+export const getArticles = (payload) => ({
   type: GET_ARTICLES,
-  paylaod: paylaod,
-})
+  payload: payload,
+});
+
 export function signInAPI() {
   return (dispatch) => {
     auth
       .signInWithPopup(provider)
-      .then((paylaod) => {
-        console.log(paylaod.user);
-        dispatch(setUser(paylaod.user));
+      .then((payload) => {
+        console.log(payload.user);
+        dispatch(setUser(payload.user));
       })
       .catch((error) => alert(error.message));
   };
@@ -48,14 +49,14 @@ export function getUserAuth() {
   };
 }
 
-export function postArticleAPI(paylaod) {
+export function postArticleAPI(payload) {
   return (dispatch) => {
     dispatch(setLoading(true))
 
-    if (paylaod.image != '') {
+    if (payload.image != '') {
       const upload = storage
-      .ref(`images/${paylaod.image.name}`)
-      .put(paylaod.image);
+      .ref(`images/${payload.image.name}`)
+      .put(payload.image);
       upload.on(
         'state_changed',
          (snapshot) => {
@@ -71,33 +72,33 @@ export function postArticleAPI(paylaod) {
         const downloadURL = await upload.snapshot.ref.getDownloadURL();
         db.collection('articles').add({
           actor: {
-            description: paylaod.user.email,
-            title: paylaod.user.displayName,
-            date: paylaod.timestamp,
-            image: paylaod.user.photoURL
+            description: payload.user.email,
+            title: payload.user.displayName,
+            date: payload.timestamp,
+            image: payload.user.photoURL
           },
-          video: paylaod.video,
+          video: payload.video,
           sharedImg:downloadURL,
           comments:0,
-          description: paylaod.description,
+          description: payload.description,
         })
         dispatch(setLoading(false))
       }
       );
     
      
-    } else if (paylaod.video)  {
+    } else if (payload.video)  {
       db.collection('articles').add({
         actor: {
-          description: paylaod.user.email,
-          title: paylaod.user.displayName,
-          date: paylaod.timestamp,
-          image: paylaod.user.photoURL
+          description: payload.user.email,
+          title: payload.user.displayName,
+          date: payload.timestamp,
+          image: payload.user.photoURL
         },
-        video: paylaod.video,
+        video: payload.video,
         sharedImg:'',
         comments:0,
-        description: paylaod.description,
+        description: payload.description,
       })
       dispatch(setLoading(false))
     }
@@ -112,7 +113,6 @@ export function getArticlesAPI() {
     .onSnapshot((snapshot) => {
       payload = snapshot.docs.map((doc) => doc.data());
       dispatch(getArticles(payload))
-      console.log(payload);
     })
   }
 }

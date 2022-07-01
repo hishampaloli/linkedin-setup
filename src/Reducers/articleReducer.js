@@ -6,6 +6,7 @@ export const initState = {
 };
 
 const articleReducer = (state = initState, action) => {
+  console.log(action);
   switch (action.type) {
     case GET_ARTICLES:
       return {

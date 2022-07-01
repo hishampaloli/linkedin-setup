@@ -103,7 +103,7 @@ function PostModalForHome(props) {
               />
             </div>
 
-            <div className="modal-img flex justify-evenly">
+            <div  className="modal-img flex justify-evenly">
               {shareImage && !videoLink && <img src={URL.createObjectURL(shareImage)} />}
               {videoLink && !shareImage && (
                 <ReactPlayer width={"45%"} height={"190px"} url={videoLink} />

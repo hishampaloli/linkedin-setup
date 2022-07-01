@@ -5,7 +5,7 @@ import { connect} from 'react-redux'
 
 function LeftCardForHome(props) {
   return (
-    <div className="left flex flex-col items-center relative ">
+    <div className="left flex flex-col items-center relative rounded-lg ">
       <div className="left-top rounded-t-lg"></div>
 
       <div className="left-body flex flex-col items-center">
