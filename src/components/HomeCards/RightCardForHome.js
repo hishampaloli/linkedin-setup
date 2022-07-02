@@ -20,7 +20,7 @@ function RightCardForHome() {
         </li>
         <li>
           <p>What’s driving the great resignation?</p>
-          <small>8 days ago</small>
+          <small>8 day ago</small>
         </li>
       </ul>
       <h1>
